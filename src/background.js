@@ -1,33 +1,49 @@
+const Spanan = spanan.default;
+
 class Traeger {
 
   constructor() {
     this.status = 'off';
     this.port = chrome.runtime.connectNative('traeger');
-    this.requestId = 1111;
-    this.port.onMessage.addListener(function(msg) {
-      console.log("Received", msg);
-      if (msg.requestId === this.requestId && msg.response) {
-        console.log(msg.response);
-        startProxy(msg.response);
-      }
-    }.bind(this));
+
+    const portWrapper = new Spanan((message) => {
+      this.port.postMessage({
+        requestId: message.uuid,
+        action: message.functionName,
+        args: message.args,
+      });
+    });
+
+    this.traeger = portWrapper.createProxy();
+
+    this.port.onMessage.addListener(function(message) {
+      portWrapper.dispatch({
+        uuid: message.requestId,
+        returnedValue: message.response,
+      });
+    });
+
     this.port.onDisconnect.addListener(function() {
       console.log("Disconnected");
     });
   }
 
   start() {
-    this.port.postMessage({requestId: this.requestId, action: 'getPort'});
+    return this.traeger.getPort().then((port) => {
+      startProxy(port);
+    });
   }
 
   enable() {
-    this.port.postMessage({action: 'setBlock', args: [true]});
-    this.status = 'on';
+    return this.traeger.setBlock(true).then(() => {
+      this.status = 'on';
+    });
   }
 
   disable() {
-    this.port.postMessage({action: 'setBlock', args: [false]});
-    this.status = 'off';
+    return this.traeger.setBlock(false).then(() => {
+      this.status = 'off';
+    });
   }
 
   stop() {
@@ -47,15 +63,18 @@ chrome.browserAction.setBadgeText({
 });
 
 chrome.browserAction.onClicked.addListener(function(tab) {
+  let promise;
   if (traeger.status === 'off') {
     traeger.start();
-    traeger.enable();
+    promise = traeger.enable();
   } else {
-    traeger.disable();
+    promise = traeger.disable();
   }
 
-  chrome.browserAction.setBadgeText({
-    text: traeger.status
+  promise.then(() => {
+    chrome.browserAction.setBadgeText({
+      text: traeger.status
+    });
   });
 });
 

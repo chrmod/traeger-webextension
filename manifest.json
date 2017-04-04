@@ -2,27 +2,23 @@
   "manifest_version": 2,
   "name": "Traeger webextension",
   "version": "0.1.0",
-
   "description": "",
-
   "applications": {
     "gecko": {
       "id": "traeger@chrmod.net"
     }
   },
-
   "background": {
-    "scripts": ["src/background.js"]
+    "scripts": [
+      "node_modules/spanan/dist/index.browser.js",
+      "src/background.js"
+    ]
   },
-
-
   "browser_action": {
     "browser_style": true
   },
-
   "permissions": [
     "nativeMessaging",
     "proxy"
   ]
-
 }

@@ -1,0 +1,24 @@
+{
+  "name": "traeger-webextension",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrmod/traeger-webextension.git"
+  },
+  "author": "",
+  "license": "AGPL-v3",
+  "bugs": {
+    "url": "https://github.com/chrmod/traeger-webextension/issues"
+  },
+  "homepage": "https://github.com/chrmod/traeger-webextension#readme",
+  "dependencies": {
+    "spanan": "^1.1.2"
+  },
+  "devDependencies": {
+  }
+}
