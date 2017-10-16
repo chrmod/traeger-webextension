@@ -3,22 +3,29 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
+  "browser": "index.browser.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "web-ext": "web-ext run --source-dir ./dist",
+    "serve": "raureif serve"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chrmod/traeger-webextension.git"
   },
   "author": "",
-  "license": "AGPL-v3",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/chrmod/traeger-webextension/issues"
   },
   "homepage": "https://github.com/chrmod/traeger-webextension#readme",
   "dependencies": {
-    "spanan": "^1.1.2"
+    "@types/node": "8.0.19",
+    "spanan": "1.3.0"
   },
   "devDependencies": {
+    "raureif": "2.0.6",
+    "raureif-typescript": "^2.1.0",
+    "typescript": "2.4.2",
+    "web-ext": "^2.2.2"
   }
 }

@@ -11,15 +11,14 @@
   },
   "background": {
     "scripts": [
-      "node_modules/spanan/dist/index.browser.js",
-      "src/background.js"
+      "index.browser.js"
     ]
   },
   "browser_action": {
     "browser_style": true
   },
   "permissions": [
-    "nativeMessaging",
+    "webRequest",
     "proxy"
   ]
 }
