@@ -1,8 +1,8 @@
 {
   "name": "traeger-webextension",
   "version": "0.1.0",
-  "description": "",
   "main": "index.js",
+  "author": "Krzysztof Jan Modras <krzysztof.modras@gmail.com>",
   "browser": "index.browser.js",
   "scripts": {
     "web-ext": "web-ext run --source-dir ./dist",
@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/chrmod/traeger-webextension#readme",
   "dependencies": {
-    "@types/node": "8.0.19",
     "spanan": "1.3.0"
   },
   "devDependencies": {
     "raureif": "2.0.6",
+    "@types/node": "8.0.19",
     "raureif-typescript": "^2.1.0",
     "typescript": "2.4.2",
     "web-ext": "^2.2.2"
