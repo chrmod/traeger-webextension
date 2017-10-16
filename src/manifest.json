@@ -18,6 +18,8 @@
     "browser_style": true
   },
   "permissions": [
+		"http://*/*",
+		"https://*/*",
     "webRequest",
     "proxy"
   ]

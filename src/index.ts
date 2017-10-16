@@ -37,8 +37,12 @@ log('start');
 
   const broxy = createBroxyProxy(broxySocket);
 
+  chrome.webRequest.onBeforeRequest.addListener((...args) => {
+    log('onBeforeRequest', ...args);
+    broxy.onBeforeRequest(...args);
+  }, {
+    urls: ['*://*/*'],
+  });
 
-  const response = await broxy.checkRequest();
-  log('Broxy response', response);
 })();
 
