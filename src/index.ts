@@ -1,5 +1,13 @@
 import * as Spanan from 'spanan';
 
+declare var chrome;
+
+const webRequestEvents = [
+  'onBeforeRequest',
+  'onBeforeSendHeaders',
+  'onHeadersReceived',
+];
+
 const log = console.log.bind(console, '[Traeger WebExtension]');
 
 const promiseFromEvent = (object, eventName) => new Promise(
@@ -37,12 +45,16 @@ log('start');
 
   const broxy = createBroxyProxy(broxySocket);
 
-  chrome.webRequest.onBeforeRequest.addListener((...args) => {
-    log('onBeforeRequest', ...args);
-    broxy.onBeforeRequest(...args);
-  }, {
-    urls: ['*://*/*'],
+  webRequestEvents.forEach((eventName) => {
+    chrome.webRequest[eventName].addListener((...args) => {
+      log(eventName, ...args);
+      return broxy[eventName](...args).then((response) => {
+        log(eventName, 'response:', response);
+        return response;
+      });
+    }, {
+      urls: ['*://*/*'],
+    });
   });
 
 })();
-
